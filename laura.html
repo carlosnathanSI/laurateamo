@@ -1,0 +1,289 @@
+<title>A Portinha Secreta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Special+Elite&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: noite de feltro costurado. Capa, contador de dias, portinha que abre a carta, motivos em cartões virados, painel de costura para personalizar. */
+:root{
+  --bg:#f1ead9; --bg2:#e6dcc4; --fg:#26343a; --muted:#5d6b6e;
+  --thread:#b8741a; --rose:#b8505f; --teal:#2f6a72; --felt:#fbf6e8; --line:#26343a33;
+  --display:"IM Fell English","Georgia",serif; --body:"IM Fell English","Georgia",serif;
+  --type:"Special Elite","Courier New",monospace; --hand:"Caveat","Segoe Script",cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e2229; --bg2:#14313a; --fg:#efe6cf; --muted:#9db0ae;
+  --thread:#e8b04a; --rose:#e58a96; --teal:#6fb5bb; --felt:#173742; --line:#efe6cf3d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e2229; --bg2:#14313a; --fg:#efe6cf; --muted:#9db0ae;
+  --thread:#e8b04a; --rose:#e58a96; --teal:#6fb5bb; --felt:#173742; --line:#efe6cf3d; color-scheme:dark}
+
+*{box-sizing:border-box}
+ /* Background de Coraline */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(
+          rgba(5, 8, 20, 0.45),
+          rgba(5, 8, 20, 0.65)
+        ),
+        url("https://i.pinimg.com/originals/c1/bb/b0/c1bbb04cc01e356e7bce60ab784a351e.gif");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Textura grain */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.20;
+      mix-blend-mode: soft-light;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body::after{mix-blend-mode:soft-light;opacity:.5}}
+:root[data-theme="dark"] body::after{mix-blend-mode:soft-light;opacity:.5}
+main{position:relative;z-index:1;max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:72px;padding-block:48px 72px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.6rem,9vw,4.6rem);font-style:italic}
+h2{font-size:clamp(1.8rem,5.5vw,2.6rem);font-style:italic}
+p{margin:0}
+.label{font-family:var(--type);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.hand{font-family:var(--hand);font-size:1.5rem;color:var(--rose);line-height:1.2}
+.stitch{border:2px dashed var(--thread);border-radius:18px;background:var(--felt);padding:28px;position:relative}
+.stitch::before{content:"";position:absolute;inset:5px;border:1px solid var(--line);border-radius:14px;pointer-events:none}
+
+/* capa */
+.hero{display:flex;flex-direction:column;gap:20px;align-items:flex-start;position:relative;min-width:0}
+.hero .sub{max-width:34ch;color:var(--muted)}
+.hero .name{color:var(--thread)}
+.moths{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.moth{position:absolute;width:44px;height:30px;opacity:.85;animation:drift 11s ease-in-out infinite}
+.moth svg{width:100%;height:100%;animation:flap .5s ease-in-out infinite alternate;transform-origin:50% 50%}
+.moth:nth-child(1){right:6%;top:4%}
+.moth:nth-child(2){right:26%;top:38%;width:30px;height:20px;animation-delay:-4s}
+.moth:nth-child(3){right:2%;top:62%;width:36px;height:24px;animation-delay:-7s}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(-6deg)}50%{transform:translate(-18px,-22px) rotate(8deg)}}
+@keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.55)}}
+
+/* contador */
+.counter{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:16px;text-align:center}
+.unit{display:flex;flex-direction:column;gap:4px;align-items:center}
+.num{font-family:var(--display);font-style:italic;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1;color:var(--thread);font-variant-numeric:tabular-nums}
+.counter-note{margin-top:20px;text-align:center}
+
+/* porta */
+.door-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.door{appearance:none;border:0;background:none;padding:0;cursor:pointer;width:150px;perspective:600px;font:inherit;color:inherit}
+.door:focus-visible{outline:3px solid var(--thread);outline-offset:8px;border-radius:12px}
+.frame{width:150px;height:230px;border-radius:75px 75px 6px 6px;background:var(--bg2);border:3px dashed var(--thread);display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;
+  box-shadow:inset 0 0 30px #0006}
+.glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 70%,var(--thread),transparent 70%);opacity:0;transition:opacity .8s}
+.leaf{position:absolute;inset:0;border-radius:75px 75px 4px 4px;background:var(--teal);transform-origin:left center;transition:transform 1s cubic-bezier(.6,0,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:22px;
+  background-image:repeating-linear-gradient(90deg,#0000 0 28px,#0002 28px 30px)}
+.knob{width:18px;height:18px;border-radius:50%;background:var(--thread);box-shadow:0 0 0 4px #0003}
+.door[aria-expanded="true"] .leaf{transform:rotateY(-110deg)}
+.door[aria-expanded="true"] .glow{opacity:.9}
+.letter{max-width:52ch;display:grid;grid-template-rows:0fr;transition:grid-template-rows .8s ease .5s,opacity .8s ease .5s;opacity:0}
+.letter.open{grid-template-rows:1fr;opacity:1}
+.letter>div{overflow:hidden;min-height:0}
+.letter-body{padding-top:8px;display:flex;flex-direction:column;gap:14px;text-align:left;white-space:pre-line}
+.letter-body .sign{font-family:var(--hand);font-size:1.7rem;color:var(--rose);text-align:right}
+
+/* motivos */
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:24px}
+.card{appearance:none;font:inherit;color:inherit;text-align:left;cursor:pointer;background:none;border:0;padding:0;perspective:800px;min-height:150px}
+.card:focus-visible{outline:3px solid var(--thread);outline-offset:4px;border-radius:16px}
+.card-in{display:grid;transition:transform .7s;transform-style:preserve-3d;min-height:150px}
+.card[aria-pressed="true"] .card-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-width:0}
+.front{background:var(--bg2);border:2px dashed var(--thread)}
+.back{background:var(--felt);border:2px solid var(--rose);transform:rotateY(180deg)}
+.front .hand{font-size:1.9rem}
+.sewbtn{width:34px;height:34px;border-radius:50%;border:3px solid var(--thread);position:relative;background:var(--bg)}
+.sewbtn::before,.sewbtn::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;background:var(--thread);transform:translate(-50%,-50%) rotate(45deg)}
+.sewbtn::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+/* jardim de estrelas */
+.sky{position:relative;height:220px;border-radius:18px;background:var(--bg2);border:2px dashed var(--thread);overflow:hidden;cursor:crosshair}
+.sky .hint{position:absolute;left:16px;right:16px;bottom:12px;text-align:center;pointer-events:none}
+.star{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);animation:pop .5s ease-out}
+.star svg{width:100%;height:100%;fill:var(--thread)}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(0) rotate(-90deg)}to{transform:translate(-50%,-50%) scale(1) rotate(0)}}
+
+/* costura */
+.sew{display:flex;flex-direction:column;gap:14px}
+.sew summary{cursor:pointer;font-family:var(--type);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sew label{display:flex;flex-direction:column;gap:6px}
+.sew input,.sew textarea{font:inherit;font-size:1rem;color:var(--fg);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.sew input:focus-visible,.sew textarea:focus-visible,.sew button:focus-visible{outline:3px solid var(--thread);outline-offset:2px}
+.sew textarea{min-height:220px;resize:vertical;line-height:1.5}
+.btn{font-family:var(--type);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;background:var(--thread);color:var(--bg);border:0;border-radius:999px;padding:12px 22px;cursor:pointer;align-self:flex-start}
+.foot{text-align:center}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important;transition-delay:0s!important}}
+</style>
+
+<main>
+  <header class="hero">
+    <div class="moths" aria-hidden="true">
+      <span class="moth"><svg viewBox="0 0 44 30"><path d="M22 15C14 2 3 3 2 10c0 8 9 11 20 5Zm0 0c8-13 19-12 20-5 0 8-9 11-20 5Z" fill="var(--teal)"/><path d="M22 12v9" stroke="var(--fg)" stroke-width="2"/></svg></span>
+      <span class="moth"><svg viewBox="0 0 44 30"><path d="M22 15C14 2 3 3 2 10c0 8 9 11 20 5Zm0 0c8-13 19-12 20-5 0 8-9 11-20 5Z" fill="var(--rose)"/><path d="M22 12v9" stroke="var(--fg)" stroke-width="2"/></svg></span>
+      <span class="moth"><svg viewBox="0 0 44 30"><path d="M22 15C14 2 3 3 2 10c0 8 9 11 20 5Zm0 0c8-13 19-12 20-5 0 8-9 11-20 5Z" fill="var(--thread)"/><path d="M22 12v9" stroke="var(--fg)" stroke-width="2"/></svg></span>
+    </div>
+    <span class="label">Uma viagem para o outro mundo</span>
+    <h1>A portinha<br>secreta de <span class="name" id="herName">você</span></h1>
+    <p class="sub">Existe uma porta pequena que só abre para quem possui meu verdadeiro amor. Esta página é a chave.</p>
+    <p class="hand">entre devagar, tem mariposas por aqui</p>
+  </header>
+
+  <section aria-labelledby="t-count">
+    <div class="stitch">
+      <span class="label">linha do tempo</span>
+      <h2 id="t-count" style="margin:6px 0 8px">Há quanto tempo a gente se costura</h2>
+      <p class="hand" style="margin-bottom:24px">desde 16 de agosto de 2026</p>
+      <div class="counter" id="counter" role="timer" aria-live="off">
+        <div class="unit"><span class="num" id="cDias">0</span><span class="label">dias</span></div>
+        <div class="unit"><span class="num" id="cHoras">0</span><span class="label">horas</span></div>
+        <div class="unit"><span class="num" id="cMin">0</span><span class="label">minutos</span></div>
+        <div class="unit"><span class="num" id="cSeg">0</span><span class="label">segundos</span></div>
+      </div>
+      <p class="counter-note hand" id="cNote"></p>
+    </div>
+  </section>
+
+  <section class="door-wrap" aria-labelledby="t-door">
+    <span class="label">uma porta bem pequena</span>
+    <h2 id="t-door">Toque na maçaneta</h2>
+    <button class="door" id="door" aria-expanded="false" aria-controls="letter" aria-label="Abrir a portinha secreta">
+      <div class="frame"><div class="glow"></div><div class="leaf"><span class="knob"></span></div></div>
+    </button>
+    <div class="letter" id="letter"><div><div class="letter-body stitch" id="letterBody"></div></div></div>
+  </section>
+
+  <section aria-labelledby="t-why">
+    <span class="label">toque para virar</span>
+    <h2 id="t-why">Seis motivos de feltro e linha</h2>
+    <div class="reasons" id="reasons"></div>
+  </section>
+
+  <section aria-labelledby="t-sky">
+    <span class="label">jardim da noite</span>
+    <h2 id="t-sky" style="margin-bottom:20px">Plante estrelas aqui</h2>
+    <div class="sky" id="sky" role="button" tabindex="0" aria-label="Toque no céu para plantar uma estrela">
+      <p class="hint label" id="skyHint">toque no céu</p>
+    </div>
+  </section>
+
+  <section>
+    <details class="stitch sew">
+      <summary>Costurar detalhes (nome, data e carta)</summary>
+      <p style="color:var(--muted);font-size:.95rem;margin-top:12px">Tudo o que você mudar aqui fica salvo só neste navegador. Os textos de exemplo podem ser trocados pelos seus.</p>
+      <label><span class="label">nome dela</span><input id="inName" type="text" autocomplete="off"></label>
+      <label><span class="label">dia em que tudo começou</span><input id="inDate" type="date"></label>
+      <label><span class="label">a carta da portinha</span><textarea id="inLetter"></textarea></label>
+      <button class="btn" id="save" type="button">Costurar</button>
+      <p class="hand" id="saved" hidden>costurado!</p>
+    </details>
+  </section>
+
+  <footer class="foot"><p class="hand">Espero que você tenha gostado amor!!</p></footer>
+</main>
+
+<script>
+(function(){
+  var DEFAULTS={
+    name:"você",
+    date:"2026-08-16",
+    letter:"Meu amor,\n\nNo fim do corredor da minha vida havia uma porta pequena e fechada. Eu passei por ela muitas vezes sem saber o que era.\n\nQuando você chegou, ela abriu sozinha. Do outro lado não tinha nada de assustador, só uma luz amarela e alguém rindo de uma piada que só nós dois entendemos.\n\nObrigado por ser curiosa, por não ter medo de mariposas e por segurar minha mão no escuro.\n\nSempre seu."
+  };
+  var REASONS=[
+    ["O seu riso","Ele aparece antes de a piada terminar, e é sempre a melhor parte."],
+    ["A sua coragem","Você abre portas pequenas que o resto do mundo finge não ver."],
+    ["O seu cuidado","Você lembra do que eu esqueci e cuida do que eu nem percebi que doía."],
+    ["A sua curiosidade","Com você, todo lugar tem um segredo e todo dia tem um pretexto."],
+    ["O seu abraço","Cabe tudo ali dentro, até o dia ruim."],
+    ["O nosso silêncio","Ficar calado ao seu lado é uma das minhas formas favoritas de conversa."]
+  ];
+  var KEY="portinha-v1";
+  function load(){try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)return Object.assign({},DEFAULTS,s)}catch(e){}return Object.assign({},DEFAULTS)}
+  function store(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+  var data=load();
+  var $=function(id){return document.getElementById(id)};
+
+  function renderText(){
+    $("herName").textContent=data.name||DEFAULTS.name;
+    var body=$("letterBody");body.textContent="";
+    var txt=data.letter||DEFAULTS.letter;
+    var parts=txt.split("\n\n");
+    parts.forEach(function(p,i){
+      var el=document.createElement("p");
+      if(i===parts.length-1&&p.length<40){el.className="sign"}
+      el.textContent=p;body.appendChild(el);
+    });
+    $("inName").value=data.name===DEFAULTS.name?"":data.name;
+    $("inDate").value=data.date;
+    $("inLetter").value=data.letter;
+  }
+
+  /* contador */
+  function pad(n){return String(n)}
+  function tick(){
+    var start=new Date(data.date+"T00:00:00");
+    var diff=Date.now()-start.getTime();
+    if(isNaN(diff)){return}
+    var neg=diff<0;if(neg)diff=-diff;
+    var s=Math.floor(diff/1000);
+    var d=Math.floor(s/86400);s-=d*86400;
+    var h=Math.floor(s/3600);s-=h*3600;
+    var m=Math.floor(s/60);s-=m*60;
+    $("cDias").textContent=d.toLocaleString("pt-BR");$("cHoras").textContent=pad(h);$("cMin").textContent=pad(m);$("cSeg").textContent=pad(s);
+    var meses=Math.floor(d/30.44);
+    $("cNote").textContent=neg?"ainda falta um pouquinho para começar":("isso dá cerca de "+meses+(meses===1?" mês":" meses")+" de linha dourada");
+  }
+  setInterval(tick,1000);
+
+  /* porta */
+  var door=$("door"),letter=$("letter");
+  door.addEventListener("click",function(){
+    var open=door.getAttribute("aria-expanded")==="true";
+    door.setAttribute("aria-expanded",String(!open));
+    door.setAttribute("aria-label",open?"Abrir a portinha secreta":"Fechar a portinha secreta");
+    letter.classList.toggle("open",!open);
+  });
+
+  /* motivos */
+  var wrap=$("reasons");
+  REASONS.forEach(function(r,i){
+    var b=document.createElement("button");b.className="card";b.type="button";b.setAttribute("aria-pressed","false");
+    b.innerHTML='<span class="card-in"><span class="face front"><span class="sewbtn" aria-hidden="true"></span><span class="hand"></span></span><span class="face back"><span class="label"></span><span></span></span></span>';
+    var f=b.querySelector(".front .hand"),bl=b.querySelector(".back .label"),bt=b.querySelector(".back span:last-child");
+    f.textContent=r[0];bl.textContent=r[0];bt.textContent=r[1];
+    b.addEventListener("click",function(){b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true")});
+    wrap.appendChild(b);
+  });
+
+  /* estrelas */
+  var sky=$("sky");
+  function plant(x,y){
+    var s=document.createElement("span");s.className="star";s.style.left=x+"px";s.style.top=y+"px";
+    s.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z"/></svg>';
+    sky.appendChild(s);$("skyHint").hidden=true;
+    var all=sky.querySelectorAll(".star");if(all.length>60)all[0].remove();
+  }
+  sky.addEventListener("click",function(e){var r=sky.getBoundingClientRect();plant(e.clientX-r.left,e.clientY-r.top)});
+  sky.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();plant(20+Math.random()*(sky.clientWidth-40),20+Math.random()*(sky.clientHeight-60))}});
+
+  /* costura */
+  $("save").addEventListener("click",function(){
+    data={name:($("inName").value.trim()||DEFAULTS.name),date:$("inDate").value||DEFAULTS.date,letter:$("inLetter").value.trim()||DEFAULTS.letter};
+    store(data);renderText();tick();
+    var s=$("saved");s.hidden=false;setTimeout(function(){s.hidden=true},2400);
+  });
+
+  renderText();tick();
+})();
+</script>
